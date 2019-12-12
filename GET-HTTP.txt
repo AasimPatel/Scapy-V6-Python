@@ -1,0 +1,15 @@
+#!/usr/local/bin/python
+from scapy.all import *
+import sys
+
+dest=sys.argv[1]
+getStr = 'GET / HTTP/1.0\n\n'
+
+# SYN
+SYN=(IPv6(dst=dest)/TCP(sport=333,dport=80, flags='S',seq=1000))
+
+#Get SYN/ACK
+SYN_ACK = sr1(SYN)
+
+#ACK/HTTP GET
+ACK=send(IPv6(dst=dest)/TCP(sport=333, dport=80, flags='A', seq=SYN_ACK.ack, ack=SYN_ACK.seq +1)/getStr)

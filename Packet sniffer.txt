@@ -1,0 +1,14 @@
+#!/usr/bin/python3                 #This tells the machine to run Python script
+
+
+#Import modules from the python library which may be needed 
+from scapy.all import *    
+
+
+#Define a function which stores pkt and shows it 
+def print_pkt(pkt):            
+        pkt.show()
+
+
+#Run the packet sniffer and store it in function
+pkt=sniff(iface="ens33", filter="icmp6", count=10, prn=print_pkt)          

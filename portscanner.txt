@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+from scapy.all import* 
+"""This is a basic portscanner"""
+target = input("Input target IPv6 address? : ")  
+
+#create a range from the first and last port
+fport = int(input("Enter firstport range: "))       
+lport = int(input("Enter lastport: "))
+lport +1
+dstlist = list(range(fport, lport))
+
+pkt=sr(IPv6(src="fd80:1234:5678:2::100", dst=target)/TCP(sport=333, dport=dstlist, flags="S"))
+
+#For returned packets, if a syn-ack is returned, print port and OPEN.
+ans, unans = pkt
+for snd,rcv in ans:
+        if rcv.sprintf(r"%TCP.flags%")=="SA": 
+                print (rcv.sprintf(r"%TCP.sport%"    "OPEN"))

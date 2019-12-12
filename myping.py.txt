@@ -1,0 +1,16 @@
+#!/usr/bin/python3
+"""
+This script sends an echo reply
+With a user defined message.
+"""
+from scapy.all import *
+import sys
+
+#If the user fails to give four arguments then display message and exit.
+if len(sys.argv)!=4:
+    print ('\n Usage: myping2.py <Source IP> <Destination IP> <"Message">\n')   
+    sys.exit(1)
+
+#'Send'an 'IPv6' packet, with user-defined 'source' and 'destination' address. With user-defined message. 
+send(IPv6(src=sys.argv[1],dst=sys.argv[2])/ICMPv6EchoRequest()/sys.argv[3])
+  

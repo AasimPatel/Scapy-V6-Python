@@ -1,0 +1,18 @@
+#!/usr/bin/python3
+"""
+This module sends detects the operating system of a target.
+"""
+from scapy.all import *                     
+
+target = input("Input target IPv6 address? : ") 
+
+#Use 'sr1 to send and recieve the packet once.
+pkt= sr1(IPv6(dst=target)/ICMPv6EchoRequest())
+
+
+if pkt.hlim < 65:             #If hop limit is less than 65 than the operating system is Linux,
+                              #if not then it is likely windows. 
+        os = "Linux"
+else:
+        os = "Windows"
+print("Operating system is: " + os)
